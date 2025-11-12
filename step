@@ -1,0 +1,24 @@
+cd /Users/rpegu/Documents/Project/MEP_TRIMBLE/Noetbook_IDE
+git remote -v
+git status
+
+create personal access token in github
+ssh-keygen -t ed25519 -C "ranjeetapegu@gmail.com" -f ~/.ssh/id_ed25519_personal
+eval "$(ssh-agent -s)"
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_personal
+
+pbcopy < ~/.ssh/id_ed25519_personal.pub
+
+mkdir -p ~/.ssh
+cat >> ~/.ssh/config <<'EOF'
+Host github.com-personal
+  HostName github.com
+  User git
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519_personal
+
+ssh -T git@github.com-personal
+
+
+git remote add origin https://github.com/ranjeetapegu/RSnowflake_Container_Runtime_for_ML.git
